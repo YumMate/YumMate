@@ -3,6 +3,7 @@ import { getAllRecipes } from "@/services/recipes";
 import { useEffect, useState, useCallback } from "react";
 import { Label, TextInput, Select, Spinner, Button } from "flowbite-react";
 import Card from "../components/Card";
+import useStore from "@/store/WishlistStore";
 
 export default function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
@@ -12,7 +13,9 @@ export default function RecipesPage() {
   const [tag, setTag] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+  const { count, inc, items } = useStore();
+  console.log(items);
+
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const recipesPerPage = 8;
@@ -49,21 +52,21 @@ export default function RecipesPage() {
 
       // Apply search filter locally
       if (searchTerm) {
-        filteredRecipes = filteredRecipes.filter(recipe => 
+        filteredRecipes = filteredRecipes.filter((recipe) =>
           recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
 
       // Apply meal filter locally
       if (meal !== "All") {
-        filteredRecipes = filteredRecipes.filter(recipe => 
+        filteredRecipes = filteredRecipes.filter((recipe) =>
           recipe.mealType.includes(meal)
         );
       }
 
       // Apply tag filter locally
       if (tag !== "All") {
-        filteredRecipes = filteredRecipes.filter(recipe => 
+        filteredRecipes = filteredRecipes.filter((recipe) =>
           recipe.tags.includes(tag)
         );
       }
@@ -109,7 +112,7 @@ export default function RecipesPage() {
   // Pagination controls
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const renderPagination = () => {
@@ -122,15 +125,15 @@ export default function RecipesPage() {
         >
           Previous
         </Button>
-        
+
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
           <Button
             key={number}
             onClick={() => handlePageChange(number)}
             className={`px-3 py-1 rounded-full ${
               currentPage === number
-                ? 'bg-orange-500 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? "bg-orange-500 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
           >
             {number}
@@ -163,7 +166,10 @@ export default function RecipesPage() {
 
         {/* Search Bar */}
         <div className="max-w-2xl mx-auto mb-8">
-          <Label htmlFor="search" className="text-gray-700 font-medium mb-2 block">
+          <Label
+            htmlFor="search"
+            className="text-gray-700 font-medium mb-2 block"
+          >
             Search Recipes
           </Label>
           <div className="relative">
@@ -259,6 +265,7 @@ export default function RecipesPage() {
                 currentRecipes.map((recipe) => (
                   <div key={recipe.id}>
                     <Card
+                      id={recipe.id}
                       imageUrl={recipe.image}
                       title={recipe.name}
                       calories={recipe.caloriesPerServing}

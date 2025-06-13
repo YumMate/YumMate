@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FaBookmark } from "react-icons/fa";
+import useStore from "@/store/WishlistStore";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const items = useStore((state) => state.items);
 
   return (
     <nav className="bg-white p-4 border-b border-gray-200">
@@ -35,9 +37,14 @@ export default function Nav() {
           </Link>
           <Link
             href="/favorites"
-            className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200"
+            className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200 relative"
           >
             <FaBookmark className="text-xl" />
+            {items.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {items.length}
+              </span>
+            )}
           </Link>
         </div>
 
@@ -91,11 +98,16 @@ export default function Nav() {
               </Link>
               <Link
                 href="/favorites"
-                className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200 flex items-center space-x-2"
+                className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200 flex items-center space-x-2 relative"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FaBookmark className="text-xl" />
                 <span>Wishlist</span>
+                {items.length > 0 && (
+                  <span className="bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {items.length}
+                  </span>
+                )}
               </Link>
             </div>
           </div>
