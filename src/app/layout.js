@@ -12,7 +12,11 @@ export default function RootLayout({ children }) {
         <ThemeModeScript />
         <title>My App</title>
       </head>
-      <body>{children}</body>
+      <body>
+        <Nav />
+        <main className="container mx-auto px-4 py-8">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
