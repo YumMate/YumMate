@@ -52,7 +52,7 @@ export default function Card({
           ) : (
             <FaRegBookmark
               className="text-gray-500"
-              onClick={() => addToWishlist({ id, imageUrl, title })}
+              onClick={() => addToWishlist({ id, imageUrl, title ,calories , rating })}
             />
           )}
         </div>
