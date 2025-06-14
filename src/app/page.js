@@ -1,4 +1,5 @@
 import Slider from "./components/Slider";
+import CategoriesSection from "./components/CategoriesSection";
 
 import TopRatedSlider from "./components/topRatedSlider";
 
@@ -12,6 +13,12 @@ export default async function Home() {
           <div className="mb-10 pb-5">
             <TopRatedSlider />
           </div>
+
+          <div>
+            <CategoriesSection />
+          </div>
+
+          
         </main>
       </div>
     </>
