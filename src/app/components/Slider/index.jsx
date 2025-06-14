@@ -6,12 +6,12 @@ export default function Slider() {
   return (
     <div className="relative h-[500px] w-full overflow-hidden rounded-xl shadow-lg">
       <div className="overflow-hidden h-full w-full">
-        <Carousel 
+        <Carousel
           indicators={true}
           className="no-scrollbar-carousel max-w-full"
           theme={{
             scrollContainer: {
-              base: 'flex h-full snap-mandatory overflow-y-hidden overflow-x-hidden scroll-smooth rounded-lg',
+              base: "flex h-full snap-mandatory overflow-y-hidden overflow-x-hidden scroll-smooth rounded-lg",
             },
           }}
           leftControl={
@@ -32,30 +32,57 @@ export default function Slider() {
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
-              <h2 className="text-white text-3xl font-bold mb-2">Discover Amazing Recipes</h2>
-              <p className="text-white/90">Explore our collection of delicious dishes</p>
+              <h2 className="text-white text-3xl font-bold mb-2">
+                Discover Amazing Recipes
+              </h2>
+              <p className="text-white/90">
+                Explore our collection of delicious dishes
+              </p>
             </div>
           </div>
           <div className="relative h-full">
             <img
               src="/images/cook 2.jpg"
-              alt="Delicious Dish 2"
+              alt="Delicious Dish 1"
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
-              <h2 className="text-white text-3xl font-bold mb-2">Master the Art of Cooking</h2>
-              <p className="text-white/90">Learn from the best recipes and techniques</p>
+              <h2 className="text-white text-3xl font-bold mb-2">
+                Discover Amazing Recipes
+              </h2>
+              <p className="text-white/90">
+                Explore our collection of delicious dishes
+              </p>
             </div>
           </div>
           <div className="relative h-full">
             <img
               src="/images/cook 3.jpg"
+              alt="Delicious Dish 2"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
+              <h2 className="text-white text-3xl font-bold mb-2">
+                Master the Art of Cooking
+              </h2>
+              <p className="text-white/90">
+                Learn from the best recipes and techniques
+              </p>
+            </div>
+          </div>
+          <div className="relative h-full">
+            <img
+              src="/images/cook 4.jpg"
               alt="Delicious Dish 3"
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
-              <h2 className="text-white text-3xl font-bold mb-2">Create Memorable Meals</h2>
-              <p className="text-white/90">Turn your kitchen into a culinary paradise</p>
+              <h2 className="text-white text-3xl font-bold mb-2">
+                Create Memorable Meals
+              </h2>
+              <p className="text-white/90">
+                Turn your kitchen into a culinary paradise
+              </p>
             </div>
           </div>
         </Carousel>
