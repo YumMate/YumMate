@@ -1,74 +1,29 @@
 'use client';
-
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiClock, FiUser, FiStar, FiTrash2 } from 'react-icons/fi';
 import { FaFireAlt, FaLeaf, FaUtensils } from 'react-icons/fa';
+import useStore from '@/store/WishlistStore';
+import { useEffect, useState } from 'react';
 
 export default function FavoritesContent() {
-  const favorites = [
-    {
-      id: 1,
-      name: "Classic Margherita Pizza",
-      image: "https://cdn.dummyjson.com/recipe-images/1.webp",
-      rating: 4.6,
-      reviewCount: 98,
-      prepTimeMinutes: 20,
-      cookTimeMinutes: 15,
-      difficulty: "Easy",
-      cuisine: "Italian",
-      caloriesPerServing: 300,
-      tags: ["Pizza", "Italian"],
-      mealType: ["Dinner"],
-      author: "Chef Lorenzo"
-    },
-    {
-      id: 1,
-      name: "Classic Margherita Pizza",
-      image: "https://cdn.dummyjson.com/recipe-images/1.webp",
-      rating: 4.6,
-      reviewCount: 98,
-      prepTimeMinutes: 20,
-      cookTimeMinutes: 15,
-      difficulty: "Easy",
-      cuisine: "Italian",
-      caloriesPerServing: 300,
-      tags: ["Pizza", "Italian"],
-      mealType: ["Dinner"],
-      author: "Chef Lorenzo"
-    },
-    {
-      id: 1,
-      name: "Classic Margherita Pizza",
-      image: "https://cdn.dummyjson.com/recipe-images/1.webp",
-      rating: 4.6,
-      reviewCount: 98,
-      prepTimeMinutes: 20,
-      cookTimeMinutes: 15,
-      difficulty: "Hard",
-      cuisine: "Italian",
-      caloriesPerServing: 300,
-      tags: ["Pizza", "Italian"],
-      mealType: ["Dinner"],
-      author: "Chef Lorenzo"
-    },
-    {
-      id: 2,
-      name: "Vegetarian Stir-Fry",
-      image: "https://cdn.dummyjson.com/recipe-images/2.webp",
-      rating: 4.7,
-      reviewCount: 26,
-      prepTimeMinutes: 15,
-      cookTimeMinutes: 20,
-      difficulty: "Medium",
-      cuisine: "Asian",
-      caloriesPerServing: 250,
-      tags: ["Vegetarian", "Stir-fry"],
-      mealType: ["Lunch"],
-      author: "Chef Mei"
-    }
-  ];
+  const { items: wishlistItems, removeItemFromWishlist } = useStore();
+  const [favorites, setFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Animation variants
+  useEffect(() => {
+    const mappedFavorites = wishlistItems.map(item => ({
+      id: item.id,
+      name: item.name || item.title || 'Untitled Recipe',
+      image: item.image || item.imageUrl || '/default-recipe.jpg',
+      rating: item.rating || 0,
+      caloriesPerServing: item.caloriesPerServing || item.calories || 0,
+    }));
+    
+    setFavorites(mappedFavorites);
+    setIsLoading(false);
+  }, [wishlistItems]);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -95,19 +50,18 @@ export default function FavoritesContent() {
     }
   };
 
-  const getDifficultyColor = (difficulty) => {
-    switch(difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Hard': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
 
-  return (
+    return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-white border-b -mt-[1px]">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-800">
@@ -117,9 +71,6 @@ export default function FavoritesContent() {
               <span className="bg-gray-100 text-gray-800 px-5 py-1 rounded-full text-md font-medium">
                 {favorites.length} {favorites.length === 1 ? "recipe" : "recipes"}
               </span>
-              {/* <button className="px-4 py-2 bg-red-500 text-white rounded-full text-sm font-medium hover:bg-red-600 transition">
-                Create New
-              </button> */}
             </div>
           </div>
         </div>
@@ -144,97 +95,73 @@ export default function FavoritesContent() {
               <p className="text-gray-500 max-w-md mx-auto mb-6">
                 Save your favorite recipes to access them anytime
               </p>
-              <button className="px-6 py-2 bg-red-500 text-white rounded-full font-medium hover:bg-red-600 transition">
-                Browse Recipes
-              </button>
+              <Link href="/recipes">
+                <button className="px-6 py-2 bg-red-500 text-white rounded-full font-medium hover:bg-red-600 transition">
+                  Browse Recipes
+                </button>
+              </Link>
             </motion.div>
           ) : (
             <motion.div
               variants={container}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8" // Changed to 3 columns and larger gap
             >
               {favorites.map((recipe) => (
                 <motion.div
                   key={recipe.id}
                   variants={item}
                   whileHover="hover"
-                  className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 relative"
+                  className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 relative transition-all duration-300 h-full flex flex-col" // Added flex layout
                 >
-                  {/* Recipe Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={recipe.image}
-                      alt={recipe.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute top-0 left-0 bg-gradient-to-r from-black/30 to-transparent w-full h-full" />
-                    
-                    {/* Quick Actions */}
-                    <div className="absolute top-3 right-3 flex space-x-2">
-                      <button className="p-2 bg-white/90 rounded-full shadow-sm hover:bg-red-100 transition">
-                        <FiTrash2 className="text-gray-600 hover:text-red-500" />
-                      </button>
+                  {/* Clickable Recipe Area */}
+                  <Link href={`/recipes/${recipe.id}`} className="block flex-grow">
+                    {/* Recipe Image - now with full display */}
+                    <div className="relative h-64 w-full overflow-hidden"> {/* Increased height */}
+                      <img
+                        src={recipe.image}
+                        alt={recipe.name}
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" // Smoother hover effect
+                        style={{ objectPosition: "center" }} // Ensure image is centered
+                        onError={(e) => {
+                          e.target.src = '/default-recipe.jpg';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" /> // Better gradient
                     </div>
-                    
-                    {/* Meal Type */}
-                    {recipe.mealType?.includes("Vegetarian") && (
-                      <div className="absolute top-3 left-3 p-1 bg-white/90 rounded-full shadow-sm">
-                        <FaLeaf className="text-green-500" />
-                      </div>
-                    )}
-                  </div>
 
-                  {/* Recipe Info */}
-                  <div className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-lg text-gray-800 line-clamp-2">
-                        {recipe.name}
-                      </h3>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <FiStar className="text-yellow-400 mr-1" />
-                        <span>{recipe.rating}</span>
-                        <span className="text-gray-400 ml-1">({recipe.reviewCount})</span>
+                    {/* Recipe Info */}
+                    <div className="p-5 flex-grow"> {/* Increased padding */}
+                      <div className="flex justify-between items-start mb-3"> {/* Increased margin */}
+                        <h3 className="font-bold text-xl text-gray-800 line-clamp-2"> {/* Larger text */}
+                          {recipe.name}
+                        </h3>
+                        <div className="flex items-center text-base text-gray-600"> {/* Larger text */}
+                          <FiStar className="text-yellow-400 mr-1.5 text-lg" /> {/* Larger icon */}
+                          <span>{recipe.rating}</span>
+                        </div>
+                      </div>
+
+                      {/* Calories */}
+                      <div className="flex items-center text-base text-gray-600"> {/* Larger text */}
+                        <FaFireAlt className="text-orange-500 mr-1.5 text-lg" /> {/* Larger icon */}
+                        <span>{recipe.caloriesPerServing} calories</span>
                       </div>
                     </div>
+                  </Link>
 
-                    {/* Meta Info */}
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      <span className={`text-xs px-2 py-1 rounded-full ${getDifficultyColor(recipe.difficulty)}`}>
-                        {recipe.difficulty}
-                      </span>
-                      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                        {recipe.cuisine}
-                      </span>
-                      <span className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full flex items-center">
-                        <FiClock className="mr-1" />
-                        {recipe.prepTimeMinutes + recipe.cookTimeMinutes} mins
-                      </span>
-                      <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full flex items-center">
-                        <FaFireAlt className="mr-1" />
-                        {recipe.caloriesPerServing} cal
-                      </span>
-                    </div>
-
-                    {/* Author */}
-                    <div className="flex items-center text-sm text-gray-600 mt-2">
-                      <FiUser className="mr-1" />
-                      <span>{recipe.author}</span>
-                    </div>
-
-                    {/* Tags */}
-                    <div className="mt-3 flex flex-wrap gap-1">
-                      {recipe.tags?.map((tag) => (
-                        <span 
-                          key={tag} 
-                          className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  {/* Delete Button */}
+                  <button 
+                    className="absolute top-4 right-4 p-2.5 bg-white/90 rounded-full shadow-md hover:bg-red-100 transition-all z-10" // Larger button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      removeItemFromWishlist(recipe.id);
+                    }}
+                  >
+                    <FiTrash2 className="text-gray-600 hover:text-red-500 text-lg" /> {/* Larger icon */}
+                  </button>
                 </motion.div>
               ))}
             </motion.div>
