@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   FaStar,
   FaRegStar,
@@ -6,14 +7,15 @@ import {
   FaRegBookmark,
   FaFire,
 } from "react-icons/fa";
+import useStore from "@/store/WishlistStore";
 
 export default function Card({
+  id,
   imageUrl,
   title,
   rating,
-  isBookmarked = false,
-  // authorName,
-  // authorAvatarUrl,
+  authorName,
+  authorAvatarUrl,
   calories,
   cuisine,
 }) {
@@ -29,20 +31,30 @@ export default function Card({
     return stars;
   };
 
+  const { addToWishlist, removeItemFromWishlist } = useStore();
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden relative group transition-transform duration-200 hover:scale-[1.02]">
       <div className="relative w-full h-48 sm:h-56 lg:h-64 overflow-hidden">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
+        <Link href={`/recipes/${id}`}>
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </Link>
 
         <div className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md cursor-pointer transition-colors duration-200 hover:bg-gray-100">
-          {isBookmarked ? (
-            <FaBookmark className="text-red-500 text-xl" />
+          {useStore((state) => state.items.some((item) => item.id === id)) ? (
+            <FaBookmark
+              className="text-red-500"
+              onClick={() => removeItemFromWishlist(id)}
+            />
           ) : (
-            <FaRegBookmark className="text-gray-500 text-xl" />
+            <FaRegBookmark
+              className="text-gray-500"
+              onClick={() => addToWishlist({ id, imageUrl, title ,calories , rating })}
+            />
           )}
         </div>
       </div>
