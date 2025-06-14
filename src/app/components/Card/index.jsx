@@ -17,6 +17,7 @@ export default function Card({
   authorName,
   authorAvatarUrl,
   calories,
+  cuisine,
 }) {
   const renderStars = () => {
     const stars = [];
@@ -65,18 +66,22 @@ export default function Card({
           {title}
         </h3>
         <div className="flex justify-between items-center text-sm text-gray-600">
-          {authorName && (
+          {/* {authorName && ( */}
             <div className="flex items-center space-x-2">
-              {authorAvatarUrl && (
+              {/* {authorAvatarUrl && (
                 <img
                   src={authorAvatarUrl}
                   alt={authorName}
                   className="w-8 h-8 rounded-full object-cover"
                 />
-              )}
-              <span>{authorName}</span>
+              )} */}
+              {/* <span>{authorName}</span> */}
+              <span>{cuisine}</span>
+              
+
+
             </div>
-          )}
+          {/* )} */}
 
           {calories && (
             <div className="flex items-center space-x-1 px-3 py-1 bg-gray-100 rounded-md">

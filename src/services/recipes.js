@@ -122,3 +122,29 @@ export const getBestRecipes = async () => {
     throw error;
   }
 };
+
+
+
+
+// Get top reating recipes ( =< 4.5 )
+
+export const topRatedRecipes = async () => {
+  try {
+    const res = await fetch("https://dummyjson.com/recipes", {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const data = await res.json();
+
+    const filteredRecipes = data.recipes.filter((recipe) => recipe.rating >= 4.5);
+
+    return filteredRecipes;
+  } catch (error) {
+    console.error("Failed to fetch top-rated recipes:", error.message);
+    return []; 
+  }
+};
+
