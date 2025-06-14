@@ -31,7 +31,8 @@ export default function Card({
     return stars;
   };
 
-  const { addToWishlist, removeItemFromWishlist } = useStore();
+  const { addToWishlist, removeItemFromWishlist, items } = useStore();
+  const isInWishlist = items.some((item) => item.id === id);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden relative group transition-transform duration-200 hover:scale-[1.02]">
@@ -45,7 +46,7 @@ export default function Card({
         </Link>
 
         <div className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md cursor-pointer transition-colors duration-200 hover:bg-gray-100">
-          {useStore((state) => state.items.some((item) => item.id === id)) ? (
+          {isInWishlist ? (
             <FaBookmark
               className="text-red-500"
               onClick={() => removeItemFromWishlist(id)}
@@ -53,7 +54,7 @@ export default function Card({
           ) : (
             <FaRegBookmark
               className="text-gray-500"
-              onClick={() => addToWishlist({ id, imageUrl, title ,calories , rating })}
+              onClick={() => addToWishlist({ id, imageUrl, title, calories, rating })}
             />
           )}
         </div>
