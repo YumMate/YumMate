@@ -156,10 +156,10 @@ export default function RecipesPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
             Find Your Favorite Recipe
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto  dark:text-gray-400">
             Discover and cook amazing recipes from around the world
           </p>
         </div>
