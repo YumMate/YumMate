@@ -4,16 +4,24 @@ import { useEffect, useState } from "react";
 import Card from "../Card";
 import { topRatedRecipes } from "@/services/recipes";
 import { Button } from "flowbite-react";
+import Loading from "../Loading";
 
 export default function TopRatedSlider() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchData = async () => {
+      try {
       const data = await topRatedRecipes();
       setRecipes(data);
+      } catch (error) {
+        console.error('Error fetching top rated recipes:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -28,6 +36,10 @@ export default function TopRatedSlider() {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <section className="my-10">

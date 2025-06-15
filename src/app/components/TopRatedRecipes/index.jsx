@@ -13,7 +13,7 @@ export function TopRatedRecipes({ recipes }) {
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id} className="mb-4 flex gap-3 items-center">
-            <Link href={`/${BASE_URL}/${recipe.id}`} className="flex items-center gap-3">
+            <Link href={`/recipes/${recipe.id}`} className="flex items-center gap-3">
               <img
                 src={recipe.image}
                 alt={recipe.name}

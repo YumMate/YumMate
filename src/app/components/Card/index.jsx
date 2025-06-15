@@ -35,7 +35,7 @@ export default function Card({
   const isInWishlist = items.some((item) => item.id === id);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden relative group transition-transform duration-200 hover:scale-[1.02]">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden relative group transition-transform duration-200 hover:scale-[1.02]">
       <div className="relative w-full h-48 sm:h-56 lg:h-64 overflow-hidden">
         <Link href={`/recipes/${id}`}>
           <img
@@ -45,7 +45,7 @@ export default function Card({
           />
         </Link>
 
-        <div className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md cursor-pointer transition-colors duration-200 hover:bg-gray-100">
+        <div className="absolute top-3 right-3 p-2 bg-white dark:bg-gray-700 rounded-full shadow-md cursor-pointer transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-600">
           {isInWishlist ? (
             <FaBookmark
               className="text-red-500"
@@ -53,7 +53,7 @@ export default function Card({
             />
           ) : (
             <FaRegBookmark
-              className="text-gray-500"
+              className="text-gray-500 dark:text-gray-400"
               onClick={() => addToWishlist({ id, imageUrl, title, calories, rating })}
             />
           )}
@@ -63,10 +63,10 @@ export default function Card({
       <div className="p-4">
         <div className="flex items-center space-x-1 mb-2">{renderStars()}</div>
 
-        <h3 className="font-bold text-lg text-gray-800 leading-tight mb-4">
+        <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100 leading-tight mb-4">
           {title}
         </h3>
-        <div className="flex justify-between items-center text-sm text-gray-600">
+        <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
           {/* {authorName && ( */}
             <div className="flex items-center space-x-2">
               {/* {authorAvatarUrl && (
@@ -85,7 +85,7 @@ export default function Card({
           {/* )} */}
 
           {calories && (
-            <div className="flex items-center space-x-1 px-3 py-1 bg-gray-100 rounded-md">
+            <div className="flex items-center space-x-1 px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-md">
               <FaFire className="text-red-500 text-base" />
               <span>{calories} cals</span>
             </div>

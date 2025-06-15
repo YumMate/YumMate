@@ -1,5 +1,5 @@
-import React from "react";
+import Loading from './components/Loading';
 
 export default function loading() {
-  return <div>loading</div>;
+  return <Loading className="min-h-screen" />;
 }
