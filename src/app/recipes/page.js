@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Label, TextInput, Select, Spinner, Button } from "flowbite-react";
 import Card from "../components/Card";
 import useStore from "@/store/WishlistStore";
+import Loading from '../components/Loading';
 
 export default function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
@@ -159,7 +160,7 @@ export default function RecipesPage() {
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
             Find Your Favorite Recipe
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto  dark:text-gray-400">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover and cook amazing recipes from around the world
           </p>
         </div>
@@ -255,9 +256,7 @@ export default function RecipesPage() {
 
         {/* Loading State */}
         {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <Spinner size="xl" className="text-orange-500" />
-          </div>
+          <Loading />
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

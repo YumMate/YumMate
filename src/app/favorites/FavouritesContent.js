@@ -5,6 +5,7 @@ import { FiClock, FiUser, FiStar, FiTrash2 } from 'react-icons/fi';
 import { FaFireAlt, FaLeaf, FaUtensils } from 'react-icons/fa';
 import useStore from '@/store/WishlistStore';
 import { useEffect, useState } from 'react';
+import Loading from '../components/Loading';
 
 export default function FavoritesContent() {
   const { items: wishlistItems, removeItemFromWishlist } = useStore();
@@ -51,24 +52,20 @@ export default function FavoritesContent() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
-      </div>
-    );
+    return <Loading />;
   }
 
     return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white border-b -mt-[1px]">
+      <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 -mt-[1px]">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
               My Recipe Collection
             </h1>
             <div className="flex items-center space-x-4">
-              <span className="bg-gray-100 text-gray-800 px-5 py-1 rounded-full text-md font-medium">
+              <span className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-5 py-1 rounded-full text-md font-medium">
                 {favorites.length} {favorites.length === 1 ? "recipe" : "recipes"}
               </span>
             </div>

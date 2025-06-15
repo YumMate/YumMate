@@ -10,13 +10,13 @@ export default function Nav() {
   const items = useStore((state) => state.items);
 
   return (
-    <nav className="bg-white p-4 border-b border-gray-200">
+    <nav className="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-2xl">🔪</span>
           <span className="text-2xl font-bold">
-            <span className="text-black">Yum</span>
+            <span className="text-black dark:text-white">Yum</span>
             <span className="text-orange-500">Mate</span>
           </span>
         </Link>
@@ -25,19 +25,19 @@ export default function Nav() {
         <div className="hidden md:flex items-center space-x-8">
           <Link
             href="/"
-            className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200"
+            className="text-gray-800 dark:text-gray-200 hover:text-orange-500 text-lg transition-colors duration-200"
           >
             Home
           </Link>
           <Link
             href="/recipes"
-            className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200"
+            className="text-gray-800 dark:text-gray-200 hover:text-orange-500 text-lg transition-colors duration-200"
           >
             Recipes
           </Link>
           <Link
             href="/favorites"
-            className="text-gray-800 hover:text-orange-500 text-lg transition-colors duration-200 relative"
+            className="text-gray-800 dark:text-gray-200 hover:text-orange-500 text-lg transition-colors duration-200 relative"
           >
             <FaBookmark className="text-xl" />
             {items.length > 0 && (
@@ -50,7 +50,7 @@ export default function Nav() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-800"
+          className="md:hidden text-gray-800 dark:text-gray-200"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           <svg
